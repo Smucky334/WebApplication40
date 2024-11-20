@@ -4,9 +4,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-     <title>Videojuegos - Agregar Producto</title>
+    <title>Videojuegos - Agregar Producto</title>
 
-     <style>
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
         /* Fuente de videojuegos */
@@ -14,11 +14,12 @@
             font-family: 'Press Start 2P', cursive;
             color: #FFF;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Añadido para que el contenido se distribuya verticalmente */
+            justify-content: flex-start;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100vh; /* Asegura que el contenido ocupe toda la altura de la ventana */
             margin: 0;
-            overflow: hidden;
+            overflow-y: auto; /* Permite el desplazamiento vertical */
             background-color: #1e1e2e;
         }
 
@@ -41,6 +42,14 @@
             width: 420px;
             text-align: center;
             z-index: 10;
+            margin-bottom: 20px; /* Se asegura de que haya espacio entre el formulario y la tabla */
+        }
+
+        /* Contenedor de la tabla con desplazamiento */
+        .table-responsive {
+            max-height: 400px; /* Ajusta la altura máxima de la tabla */
+            overflow-y: auto; /* Activa el desplazamiento vertical */
+            width: 100%; /* Asegura que la tabla ocupe todo el ancho */
         }
 
         h1 {
@@ -52,8 +61,13 @@
         }
 
         @keyframes pulseText {
-            0%, 100% { color: #ffcc00; }
-            50% { color: #fff; }
+            0%, 100% {
+                color: #ffcc00;
+            }
+
+            50% {
+                color: #fff;
+            }
         }
 
         label {
@@ -67,29 +81,29 @@
             margin-bottom: 15px;
         }
 
-        .form-field input[type="text"],
-        .form-field input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 2px solid #444;
-            border-radius: 5px;
-            background: #333;
-            color: #FFF;
-            font-size: 16px;
-            outline: none;
-            transition: border 0.3s ease;
-        }
+            .form-field input[type="text"],
+            .form-field input[type="number"] {
+                width: 100%;
+                padding: 10px;
+                margin-top: 5px;
+                border: 2px solid #444;
+                border-radius: 5px;
+                background: #333;
+                color: #FFF;
+                font-size: 16px;
+                outline: none;
+                transition: border 0.3s ease;
+            }
 
-        .form-field input[type="text"]:focus,
-        .form-field input[type="number"]:focus {
-            border-color: #ff004d;
-        }
+                .form-field input[type="text"]:focus,
+                .form-field input[type="number"]:focus {
+                    border-color: #ff004d;
+                }
 
-        .form-field input[type="file"] {
-            margin-top: 5px;
-            color: #FFF;
-        }
+            .form-field input[type="file"] {
+                margin-top: 5px;
+                color: #FFF;
+            }
 
         .btn-submit {
             width: 100%;
@@ -106,11 +120,11 @@
             transition: 0.3s;
         }
 
-        .btn-submit:hover {
-            background: linear-gradient(45deg, #ffcc00, #ff004d);
-            transform: scale(1.05);
-        }
-       /* Asegura que el GridView ocupe todo el ancho disponible */
+            .btn-submit:hover {
+                background: linear-gradient(45deg, #ffcc00, #ff004d);
+                transform: scale(1.05);
+            }
+        /* Asegura que el GridView ocupe todo el ancho disponible */
         #gvProductos {
             width: 100%;
             margin-top: 20px;
@@ -118,41 +132,38 @@
             color: white;
             border-collapse: collapse;
             border-radius: 5px;
-            table-layout: auto;  /* Hace que el ancho de las columnas se ajuste al contenido */
-            overflow-x: auto; /* Permite el desplazamiento horizontal si es necesario */
+            table-layout: auto;
+            display: block; /* Hace que la tabla pueda desplazarse */
         }
 
-        /* Ajusta el tamaño de las imágenes para que no se corten */
+        /* Estilo para las imágenes */
         .grid-image {
-            width: 80px; /* Establece un ancho fijo */
-            height: 80px; /* Establece una altura fija */
-            object-fit: cover; /* Asegura que la imagen se recorte y ajuste al tamaño */
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        /* Estilo para la cabecera */
+        /* Estilo para las filas y cabecera */
         #gvProductos th {
             background-color: #ff004d;
             color: white;
         }
 
-        /* Estilo para las filas alternadas */
         #gvProductos tr:nth-child(even) {
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Estilo para las filas al pasar el mouse */
         #gvProductos tr:hover {
             background: rgba(255, 0, 77, 0.3);
         }
-
     </style>
 
 </head>
 <body>
-    
-      <!-- Fondo animado de partículas -->
+
+    <!-- Fondo animado de partículas -->
     <div id="particles-js"></div>
 
     <form id="formAgregarProducto" runat="server" enctype="multipart/form-data">
@@ -162,7 +173,7 @@
                 <label for="txtNombre">Nombre:</label>
                 <asp:TextBox ID="txtNombre" runat="server" required="true" />
             </div>
-            
+
             <div class="form-field">
                 <label for="txtCantidad">Cantidad:</label>
                 <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" required="true" />
@@ -177,44 +188,44 @@
                 <label for="fileImagen">Imagen:</label>
                 <asp:FileUpload ID="fileImagen" runat="server" />
             </div>
-            
+
             <asp:Button ID="btnAgregarProducto" runat="server" Text="Agregar Producto" CssClass="btn-submit" OnClick="btnAgregarProducto_Click" />
-            
+
         </div>
 
         <h2 class="grid-title">Catálogo de Productos</h2>
-<asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="False" CssClass="table-responsive">
-    <Columns>
-        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
-        <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:C}" />
-        <asp:TemplateField HeaderText="Imagen">
-            <ItemTemplate>
-                <asp:Image ID="imgProducto" runat="server" ImageUrl='<%# Eval("ImagenUrl") %>' CssClass="grid-image" />
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-</asp:GridView>
+        <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="False" CssClass="table-responsive">
+            <Columns>
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:C}" />
+                <asp:TemplateField HeaderText="Imagen">
+                    <ItemTemplate>
+                        <asp:Image ID="imgProducto" runat="server" ImageUrl='<%# Eval("ImagenUrl") %>' CssClass="grid-image" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
 
         <div style="overflow-x: auto;">
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table-responsive">
-        <Columns>
-            <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-            <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
-            <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:C}" />
-            <asp:TemplateField HeaderText="Imagen">
-                <ItemTemplate>
-                    <asp:Image ID="imgProducto" runat="server" ImageUrl='<%# Eval("ImagenUrl") %>' CssClass="grid-image" />
-                </ItemTemplate>
-            </asp:TemplateField>
-        </Columns>
-    </asp:GridView>
-</div>
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table-responsive">
+                <Columns>
+                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                    <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:C}" />
+                    <asp:TemplateField HeaderText="Imagen">
+                        <ItemTemplate>
+                            <asp:Image ID="imgProducto" runat="server" ImageUrl='<%# Eval("ImagenUrl") %>' CssClass="grid-image" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </div>
 
 
     </form>
 
-   <!-- Agrega el script para generar el efecto de partículas -->
+    <!-- Agrega el script para generar el efecto de partículas -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         particlesJS("particles-js", {
